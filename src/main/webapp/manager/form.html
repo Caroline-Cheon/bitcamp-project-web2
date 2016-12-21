@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>매니저관리-입력폼</title>
+</head>
+<body>
+<div id='header' style='background-color:gray; height:40px;'>
+<img src='../image/hoho.jpg' height='30' style='float:left; margin-top:6px; margin-left:7px;'> 
+<div style='color:white; font-weight:bold; margin-left:60px; padding-top:3px; font-family: 고딕체, sans-serif; font-size:x-large;'>교육센터관리시스템</div>
+</div>
+
+<h1>매니저 등록폼</h1>
+<form action='add' method='POST'>
+<table border='1'>
+<tr><th>이메일</th><td><input name='email' type='text' placeholder='예)hong@test.com'></td></tr>
+<tr><th>암호</th><td><input name='password' type='password'></td></tr>
+<tr><th>이름</th><td><input name='name' type='text' placeholder='예)홍길동'></td></tr>
+<tr><th>전화</th><td><input name='tel' type='text' placeholder='예)010-1111-2222'></td></tr>
+<tr><th>직책</th><td><input name='posi' type='text' placeholder='예)대리'></td></tr>
+<tr><th>팩스</th><td><input name='fax' type='text' placeholder='예)02-1234-5678'></td></tr>
+<tr><th>사진</th><td><input name='photoPath' type='file'></td></tr>
+</table>
+<button type='submit'>등록</button>
+ <a href='list'>목록</a>
+</form>
+
+<div id='footer' style='background-color:gray; height:20px; margin-top:20px;'>
+  <div style='color:white; padding-top:1px; font-family: 고딕체, sans-serif; text-align:center; font-weight:lighter;'>
+  @2016 비트캠프 자바89기
+  </div>
+</div>
+
+</body>
+</html>
