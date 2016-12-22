@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java89.ems2.dao.MemberDao;
 import bitcamp.java89.ems2.dao.TeacherDao;
-import bitcamp.java89.ems2.dao.impl.MemberMysqlDao;
-import bitcamp.java89.ems2.dao.impl.TeacherMysqlDao;
 import bitcamp.java89.ems2.domain.Teacher;
 
 @WebServlet("/teacher/update")
@@ -26,8 +24,6 @@ public class TeacherUpdateServlet extends HttpServlet {
     
     
     try {
-      request.setCharacterEncoding("UTF-8");
-      
       Teacher teacher = new Teacher();
       teacher.setMemberNo(Integer.parseInt(request.getParameter("memberNo")));
       teacher.setEmail(request.getParameter("email"));

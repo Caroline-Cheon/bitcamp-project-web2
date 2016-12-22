@@ -14,8 +14,6 @@ import bitcamp.java89.ems2.dao.ManagerDao;
 import bitcamp.java89.ems2.dao.MemberDao;
 import bitcamp.java89.ems2.dao.StudentDao;
 import bitcamp.java89.ems2.dao.TeacherDao;
-import bitcamp.java89.ems2.dao.impl.ManagerMysqlDao;
-import bitcamp.java89.ems2.dao.impl.TeacherMysqlDao;
 
 @WebServlet("/student/delete")
 public class StudentDeleteServlet extends HttpServlet {

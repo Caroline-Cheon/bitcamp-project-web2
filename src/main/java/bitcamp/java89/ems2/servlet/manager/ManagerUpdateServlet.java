@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java89.ems2.dao.ManagerDao;
 import bitcamp.java89.ems2.dao.MemberDao;
-import bitcamp.java89.ems2.dao.impl.ManagerMysqlDao;
-import bitcamp.java89.ems2.dao.impl.MemberMysqlDao;
 import bitcamp.java89.ems2.domain.Manager;
 
 @WebServlet("/manager/update")
@@ -25,9 +23,6 @@ public class ManagerUpdateServlet extends HttpServlet {
       throws ServletException, IOException {
     
     try {
-      
-      request.setCharacterEncoding("UTF-8");
-  
       Manager manager = new Manager();
       manager.setMemberNo(Integer.parseInt(request.getParameter("memberNo")));
       manager.setEmail(request.getParameter("email"));

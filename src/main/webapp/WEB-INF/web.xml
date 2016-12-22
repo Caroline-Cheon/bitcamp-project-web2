@@ -6,15 +6,33 @@
   version="3.1"
   metadata-complete="false">
 
+<!-- 리스너 등록 -->
+  <listener>
+    <listener-class>bitcamp.java89.ems2.listener.ContextLoaderListener</listener-class>
+  </listener>
+
+<!-- 필터 등록 -->
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>bitcamp.java89.ems2.filter.CharacterEncodingFilter</filter-class>
+  </filter>
+
+<!-- 필터를 어느 요청에 지정할 것인지 설정한다. -->
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
 <!--  서블릿 클래스 등록 -->
 
   <!-- 이 서블릿은 다른 서블릿이 사용할 도구를 준비하는 일을 한다.
        이 서블릿은 클라이언트에게 서비스를 제공하는 용도가 아니기 때문에 
        URL을 부여하지 않는다. -->
+<!--
   <servlet>
     <servlet-name>Context Loader Servlet</servlet-name>
     <servlet-class>bitcamp.java89.ems2.servlet.ContextLoaderServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
-  
+-->
 </web-app>
