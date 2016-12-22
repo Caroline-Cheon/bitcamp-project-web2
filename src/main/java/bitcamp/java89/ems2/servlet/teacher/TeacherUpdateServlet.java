@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.java89.ems2.dao.MemberDao;
+import bitcamp.java89.ems2.dao.TeacherDao;
 import bitcamp.java89.ems2.dao.impl.MemberMysqlDao;
 import bitcamp.java89.ems2.dao.impl.TeacherMysqlDao;
 import bitcamp.java89.ems2.domain.Teacher;
@@ -54,13 +56,13 @@ public class TeacherUpdateServlet extends HttpServlet {
       
       out.println("<h1>등록 결과</h1>");
       
-      TeacherMysqlDao teacherDao = TeacherMysqlDao.getInstance();
+      TeacherDao teacherDao = (TeacherDao)this.getServletContext().getAttribute("teacherDao");
     
       if (!teacherDao.exist(teacher.getMemberNo())) { // 강사나 매니저로 등록되지 않았다면,
         throw new Exception("사용자를 찾지 못했습니다.");
         
       } 
-      MemberMysqlDao memberDao = MemberMysqlDao.getInstance();
+      MemberDao memberDao = (MemberDao)this.getServletContext().getAttribute("memberDao");
       memberDao.update(teacher);
       teacherDao.update(teacher);
       out.println("<p>변경 하였습니다.</p>");

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.java89.ems2.dao.StudentDao;
 import bitcamp.java89.ems2.dao.impl.StudentMysqlDao;
 import bitcamp.java89.ems2.domain.Student;
 
@@ -41,7 +42,7 @@ public class StudentDetailServlet extends HttpServlet {
       out.println("<h1>학생 정보</h1>");
       out.println("<form action='update' method='POST'>");
     
-      StudentMysqlDao studentDao = StudentMysqlDao.getInstance();
+      StudentDao studentDao = (StudentDao)this.getServletContext().getAttribute("studentDao");
       Student student = studentDao.getOne(memberNo);
       
       if (student == null) {

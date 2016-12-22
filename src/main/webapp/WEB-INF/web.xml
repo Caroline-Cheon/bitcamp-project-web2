@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+  version="3.1"
+  metadata-complete="false">
+
+<!--  서블릿 클래스 등록 -->
+
+  <!-- 이 서블릿은 다른 서블릿이 사용할 도구를 준비하는 일을 한다.
+       이 서블릿은 클라이언트에게 서비스를 제공하는 용도가 아니기 때문에 
+       URL을 부여하지 않는다. -->
+  <servlet>
+    <servlet-name>Context Loader Servlet</servlet-name>
+    <servlet-class>bitcamp.java89.ems2.servlet.ContextLoaderServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+</web-app>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.java89.ems2.dao.TeacherDao;
 import bitcamp.java89.ems2.dao.impl.TeacherMysqlDao;
 import bitcamp.java89.ems2.domain.Teacher;
 
@@ -40,7 +41,7 @@ public class TeacherListServlet extends HttpServlet {
       
       out.println("<h1>강사 정보</h1>");
       
-      TeacherMysqlDao teacherDao = TeacherMysqlDao.getInstance();
+      TeacherDao teacherDao = (TeacherDao)this.getServletContext().getAttribute("teacherDao");
       ArrayList<Teacher> list = teacherDao.getList();
 
       out.println("<a href='form.html'>추가</a><br>");

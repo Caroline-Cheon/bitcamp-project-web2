@@ -12,20 +12,9 @@ import bitcamp.java89.ems2.util.DataSource;
 public class StudentMysqlDao implements StudentDao {
   DataSource ds;
   
-  //Singleton 패턴 - start
-  private StudentMysqlDao() {
-    ds = DataSource.getInstance();
+  public void setDataSource(DataSource ds) {
+    this.ds = ds;
   }
- 
-  static StudentMysqlDao instance;
- 
-  public static StudentMysqlDao getInstance() {
-    if (instance == null) {
-      instance = new StudentMysqlDao();
-    }
-    return instance;
-  }
-  // end - Singleton 패턴
  
   public ArrayList<Student> getList() throws Exception {
     ArrayList<Student> list = new ArrayList<>();

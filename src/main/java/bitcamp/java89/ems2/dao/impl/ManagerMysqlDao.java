@@ -5,28 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import bitcamp.java89.ems2.dao.StudentDao;
+import bitcamp.java89.ems2.dao.ManagerDao;
 import bitcamp.java89.ems2.domain.Manager;
 import bitcamp.java89.ems2.util.DataSource;
 
-public class ManagerMysqlDao implements StudentDao {
+public class ManagerMysqlDao implements ManagerDao {
   DataSource ds;
   
-  //Singleton 패턴 - start
-  private ManagerMysqlDao() {
-    ds = DataSource.getInstance();
+  public void setDataSource(DataSource ds) {
+    this.ds = ds;
   }
- 
-  static ManagerMysqlDao instance;
- 
-  public static ManagerMysqlDao getInstance() {
-    if (instance == null) {
-      instance = new ManagerMysqlDao();
-    }
-    return instance;
-  }
-  // end - Singleton 패턴
- 
+
   public ArrayList<Manager> getList() throws Exception {
     ArrayList<Manager> list = new ArrayList<>();
     Connection con = ds.getConnection(); // 커넥션풀에서 한 개의 Connection 객체를 임대한다.

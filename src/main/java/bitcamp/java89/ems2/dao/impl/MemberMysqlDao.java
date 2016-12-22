@@ -13,21 +13,10 @@ import bitcamp.java89.ems2.util.DataSource;
 public class MemberMysqlDao implements MemberDao {
   DataSource ds;
   
-  //Singleton 패턴 - start
-  private MemberMysqlDao() {
-    ds = DataSource.getInstance();
+  public void setDataSource(DataSource ds) {
+    this.ds = ds;
   }
- 
-  static MemberMysqlDao instance;
- 
-  public static MemberMysqlDao getInstance() {
-    if (instance == null) {
-      instance = new MemberMysqlDao();
-    }
-    return instance;
-  }
-  // end - Singleton 패턴
- 
+  
   public boolean exist(String email) throws Exception {
     Connection con = ds.getConnection(); // 커넥션풀에서 한 개의 Connection 객체를 임대한다.
     try (

@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bitcamp.java89.ems2.dao.impl.ManagerMysqlDao;
-import bitcamp.java89.ems2.dao.impl.MemberMysqlDao;
-import bitcamp.java89.ems2.dao.impl.StudentMysqlDao;
-import bitcamp.java89.ems2.dao.impl.TeacherMysqlDao;
+import bitcamp.java89.ems2.dao.ManagerDao;
+import bitcamp.java89.ems2.dao.MemberDao;
+import bitcamp.java89.ems2.dao.StudentDao;
+import bitcamp.java89.ems2.dao.TeacherDao;
 
 @WebServlet("/manager/delete")
 public class ManagerDeleteServlet extends HttpServlet {
@@ -45,7 +45,7 @@ public class ManagerDeleteServlet extends HttpServlet {
       
       out.println("<h1>삭제 결과</h1>");
 
-      ManagerMysqlDao managerDao = ManagerMysqlDao.getInstance();
+      ManagerDao managerDao = (ManagerDao)this.getServletContext().getAttribute("managerDao");
     
       if (!managerDao.exist(memberNo)) {
         throw new Exception("학생을 찾지 못했습니다.");
@@ -53,9 +53,9 @@ public class ManagerDeleteServlet extends HttpServlet {
       
       managerDao.delete(memberNo);
       
-      MemberMysqlDao memberDao = MemberMysqlDao.getInstance();
-      StudentMysqlDao studentDao = StudentMysqlDao.getInstance();
-      TeacherMysqlDao teacherDao = TeacherMysqlDao.getInstance();
+      MemberDao memberDao = (MemberDao)this.getServletContext().getAttribute("memberDao");
+      StudentDao studentDao = (StudentDao)this.getServletContext().getAttribute("studentDao");
+      TeacherDao teacherDao = (TeacherDao)this.getServletContext().getAttribute("teacherDao");
       
       if (!studentDao.exist(memberNo) && !teacherDao.exist(memberNo)) {
         memberDao.delete(memberNo);

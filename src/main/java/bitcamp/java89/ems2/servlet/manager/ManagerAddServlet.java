@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.java89.ems2.dao.ManagerDao;
+import bitcamp.java89.ems2.dao.MemberDao;
 import bitcamp.java89.ems2.dao.impl.ManagerMysqlDao;
 import bitcamp.java89.ems2.dao.impl.MemberMysqlDao;
 import bitcamp.java89.ems2.domain.Manager;
@@ -54,13 +56,13 @@ public class ManagerAddServlet extends HttpServlet {
       
       out.println("<h1>등록 결과</h1>");
     
-      ManagerMysqlDao managerDao = ManagerMysqlDao.getInstance();
+      ManagerDao managerDao = (ManagerDao)this.getServletContext().getAttribute("managerDao");
     
       if (managerDao.exist(manager.getEmail())) {
         throw new Exception("같은 사용자 아이디가 존재합니다. 등록을 취소합니다.");
       }
       
-      MemberMysqlDao memberDao = MemberMysqlDao.getInstance();
+      MemberDao memberDao = (MemberDao)this.getServletContext().getAttribute("memberDao");
       
       if (!memberDao.exist(manager.getEmail())) { // 강사나 매니저로 등록되지 않았다면,
         memberDao.insert(manager);
