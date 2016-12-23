@@ -1,5 +1,11 @@
 # java89-project-web2
 
+## 1.0 - 쿠키를 이용하여 로그인 아이디 저장하기, 로그인 처리
+- 로그인 폼 생성
+  - LoginFormServlet.java 생성
+- MemberDao와 MemberMysqlDao 클래스에 exist(email, password) 메서드 추가
+  - LoginServlet 클래스에 로그인 처리 코드 추가
+  
 ## 0.9 - Listener 컴포넌트를 이용하여 웹 애플리케이션에서 사용할 도구 준비하기
 - 웹 애플리케이션이 시작되면 서블릿들이 공동으로 사용할 객체를 준비시킨다.
   - ServletContextListener 구현체를 만든다.
