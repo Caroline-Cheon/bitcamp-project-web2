@@ -1,5 +1,14 @@
 # java89-project-web2
 
+## 1.2 - 학생 등록시 사진 업로드하기
+- 의존 라이브러리 설정하기
+  - build.gradle 파일에 apache-fileupload 라이브러리 추가
+  - "gradle eclipse" 명령을 수행하여 이클립스 설정 파일을 갱신
+- student/form.html 파일 변경
+  - form 태그에 enctype 속성 추가
+- StudentAddServlet 클래스 변경
+  - fileupload 라이브러리의 클래스를 사용하여 멀티파트 데이터 처리
+
 ## 1.1 - 세션을 이용하여 로그인 사용자 정보 저장하고 꺼내기 
 - LoginServlet의 doPost() 변경
   - MemberDao를 이용하여 로그인 사용자 정보를 가져온다.

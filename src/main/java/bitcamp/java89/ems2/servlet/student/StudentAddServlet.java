@@ -2,6 +2,7 @@ package bitcamp.java89.ems2.servlet.student;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import bitcamp.java89.ems2.dao.MemberDao;
 import bitcamp.java89.ems2.dao.StudentDao;
 import bitcamp.java89.ems2.domain.Member;
 import bitcamp.java89.ems2.domain.Student;
+import bitcamp.java89.ems2.util.MultipartUtil;
 
 @WebServlet("/student/add")
 public class StudentAddServlet extends HttpServlet {
@@ -24,15 +26,17 @@ public class StudentAddServlet extends HttpServlet {
       throws ServletException, IOException {
     
     try {
+      Map<String,String> dataMap = MultipartUtil.parse(request);
+      
       Student student = new Student();
-      student.setEmail(request.getParameter("email"));
-      student.setPassword(request.getParameter("password"));
-      student.setName(request.getParameter("name"));
-      student.setTel(request.getParameter("tel"));
-      student.setWorking(request.getParameter("working").equals("true") ? true : false);
-      student.setGrade(request.getParameter("grade"));
-      student.setSchoolName(request.getParameter("schoolName"));
-      student.setPhotoPath(request.getParameter("photoPath"));
+      student.setEmail(dataMap.get("email"));
+      student.setPassword(dataMap.get("password"));
+      student.setName(dataMap.get("name"));
+      student.setTel(dataMap.get("tel"));
+      student.setWorking(Boolean.parseBoolean(dataMap.get("working")));
+      student.setGrade(dataMap.get("grade"));
+      student.setSchoolName(dataMap.get("schoolName"));
+      student.setPhotoPath(dataMap.get("photoPath"));
       
       response.setContentType("text/html;charset=UTF-8");
       PrintWriter out = response.getWriter();
