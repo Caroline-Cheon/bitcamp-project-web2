@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java89.ems2.dao.MemberDao;
+import bitcamp.java89.ems2.domain.Member;
 
 @WebServlet("/auth/login")
 public class LoginServlet extends HttpServlet {
@@ -23,6 +24,7 @@ public class LoginServlet extends HttpServlet {
     
     String email = "";
     Cookie[] cookies = request.getCookies();
+    
     if (cookies != null) {
       for (Cookie cookie : cookies) {
         if (cookie.getName().equals("email")) {
@@ -56,6 +58,7 @@ public class LoginServlet extends HttpServlet {
     out.println("<tr><th>암호</th><td><input name='password' type='password'></td></tr>");
     out.println("<tr><th></th><td><input name='saveEmail' type='checkbox'> 이메일 저장 </td></tr>");
     out.println("</table>");
+    
     out.println("<button type='submit'>로그인</button>");
     out.println("</form>");
     
@@ -90,7 +93,9 @@ public class LoginServlet extends HttpServlet {
       
       MemberDao memberDao = (MemberDao)this.getServletContext().getAttribute("memberDao");
       
-      if (memberDao.exist(email, password)) {
+      if (memberDao.exist(email, password)) {   // 봐야할 부분
+        Member member = memberDao.getOne(email);
+        request.getSession().setAttribute("member", member);
         response.sendRedirect("../student/list");
         return;
       }

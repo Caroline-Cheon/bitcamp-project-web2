@@ -1,5 +1,15 @@
 # java89-project-web2
 
+## 1.1 - 세션을 이용하여 로그인 사용자 정보 저장하고 꺼내기 
+- LoginServlet의 doPost() 변경
+  - MemberDao를 이용하여 로그인 사용자 정보를 가져온다.
+  - 그리고 HttpSession 보관소에 저장한다.
+- HeaderServlet 변경
+  - 로그인 하지 않은 경우 "로그인 링크" 출력
+  - 로그인 한 경우 "이름과 로그아웃 링크" 출력
+- LogoutServlet 생성
+  - 세션 무효화시킨다.
+
 ## 1.0 - 쿠키를 이용하여 로그인 아이디 저장하기, 로그인 처리
 - 로그인 폼 생성
   - LoginFormServlet.java 생성
