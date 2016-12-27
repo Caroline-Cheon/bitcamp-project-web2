@@ -22,11 +22,11 @@
   - ManagerDetailServlet 클래스 변경
     - 사진 출력
 - 강사 사진 업로드
-  - manager/form.html 파일 변경
+  - teacher/form.html 파일 변경
     - form 태그에 enctype 속성 추가
-  - ManagerAddServlet, ManagerUpdateServlet 클래스 변경
+  - TeacherAddServlet, TeacherUpdateServlet 클래스 변경
     - fileupload 라이브러리의 클래스를 사용하여 멀티파트 데이터 처리
-  - ManagerDetailServlet 클래스 변경
+  - TeacherDetailServlet 클래스 변경
     - 사진 출력
 
 ## 1.1 - 세션을 이용하여 로그인 사용자 정보 저장하고 꺼내기 

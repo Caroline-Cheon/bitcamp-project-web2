@@ -186,7 +186,7 @@ public class TeacherMysqlDao implements TeacherDao {
       ds.returnConnection(con);
     }
   }
-  
+  //업데이트 된 부분
   public void update(Teacher teacher) throws Exception {
     Connection con = ds.getConnection();
     try (
@@ -201,6 +201,9 @@ public class TeacherMysqlDao implements TeacherDao {
         stmt.setInt(4, teacher.getMemberNo());
         
         stmt.executeUpdate();
+        
+        this.deletePhotoList(teacher);
+        this.insertPhotoList(teacher);
        
     } finally {
       ds.returnConnection(con);
@@ -214,6 +217,21 @@ public class TeacherMysqlDao implements TeacherDao {
             "delete from tcher where tno=?"); ) {
       
       stmt.setInt(1, memberNo);
+      
+      stmt.executeUpdate();
+      
+    } finally {
+      ds.returnConnection(con);
+    }
+  }
+  //업데이트 된 부분
+  public void deletePhotoList(Teacher teacher) throws Exception {
+    Connection con = ds.getConnection();
+    try (
+        PreparedStatement stmt = con.prepareStatement(
+            "delete from tch_phot where tno=?"); ) {
+      
+      stmt.setInt(1, teacher.getMemberNo());
       
       stmt.executeUpdate();
       

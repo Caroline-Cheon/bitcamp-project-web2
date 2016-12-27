@@ -71,7 +71,7 @@ public class TeacherDetailServlet extends HttpServlet {
       for (int i = 0; i < 3; i++) {
         out.printf("<tr><th>사진</th><td>"
             + "<img src='../upload/%s' height='80'>"
-            + "<input name='photoPath%d' type='file'></td></tr>",
+            + "<input name='photoPath%d' type='file'></td></tr>\n",
             (i < photoList.size()) ? photoList.get(i).getFilePath() : null,
              i + 1);
       }
