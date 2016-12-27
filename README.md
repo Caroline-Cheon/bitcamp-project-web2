@@ -1,5 +1,19 @@
 # java89-project-web2
 
+## 1.4 - 스프링 IoC 컨테이너 적용
+- 스프링 라이브러리 파일 준비
+  - build.gradle 파일에 스프링 의존 라이브버리 추가
+  - 이클립스 설정 파일 갱신
+- 스프링 IoC 컨테이너가 사용할 설정 파일 준비
+  - /WEB-INF/conf/application-context.xml
+- ContextLoaderListener 클래스 변경
+  - 스프링 IoC 컨테이너 생성
+- DAO 또는 DataSource 객체에 @Component 애노테이션을 붙인다.
+  - 즉 스프링 IoC 컨테이너가 이런 애노테이션이 붙은 객체를 관리해준다.
+- Servlet 클래스 변경
+  - 스프링 IoC 컨테이너를 통해 DAO 객체를 얻어야 한다.
+
+
 ## 1.3 - 로그인 할 때 사용자의 유형을 지정하고, 로그인 사용자 사진 출력
 - 로그인 폼에 사용자 유형 선택 추가
   - LoginServlet.doGet() 변경

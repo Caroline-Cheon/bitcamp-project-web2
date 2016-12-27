@@ -5,17 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import bitcamp.java89.ems2.dao.ManagerDao;
 import bitcamp.java89.ems2.domain.Manager;
 import bitcamp.java89.ems2.util.DataSource;
 
+@Repository("managerDao")
 public class ManagerMysqlDao implements ManagerDao {
-  DataSource ds;
+  @Autowired DataSource ds;
   
-  public void setDataSource(DataSource ds) {
-    this.ds = ds;
-  }
-
   public ArrayList<Manager> getList() throws Exception {
     ArrayList<Manager> list = new ArrayList<>();
     Connection con = ds.getConnection(); // 커넥션풀에서 한 개의 Connection 객체를 임대한다.

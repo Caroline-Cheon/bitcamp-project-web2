@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import bitcamp.java89.ems2.dao.MemberDao;
 import bitcamp.java89.ems2.dao.StudentDao;
 import bitcamp.java89.ems2.domain.Student;
+import bitcamp.java89.ems2.listener.ContextLoaderListener;
 import bitcamp.java89.ems2.util.MultipartUtil;
 
 @WebServlet("/student/update")
@@ -56,13 +57,13 @@ public class StudentUpdateServlet extends HttpServlet {
       
       out.println("<h1>학생 결과</h1>");
     
-      StudentDao studentDao = (StudentDao)this.getServletContext().getAttribute("studentDao");
+      StudentDao studentDao = (StudentDao)ContextLoaderListener.applicationContext.getBean("studentDao");
       
       if (!studentDao.exist(student.getMemberNo())) {
         throw new Exception("사용자를 찾지 못했습니다.");
       }
       
-      MemberDao memberDao = (MemberDao)this.getServletContext().getAttribute("memberDao");
+      MemberDao memberDao = (MemberDao)ContextLoaderListener.applicationContext.getBean("memberDao");
       memberDao.update(student);
       studentDao.update(student);
       out.println("<p>변경 하였습니다.</p>");

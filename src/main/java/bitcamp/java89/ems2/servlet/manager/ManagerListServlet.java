@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java89.ems2.dao.ManagerDao;
 import bitcamp.java89.ems2.domain.Manager;
+import bitcamp.java89.ems2.listener.ContextLoaderListener;
 
 @WebServlet("/manager/list")
 public class ManagerListServlet extends HttpServlet {
@@ -41,7 +42,7 @@ public class ManagerListServlet extends HttpServlet {
       
       out.println("<h1>매니저 정보</h1>");
       
-      ManagerDao managerDao = (ManagerDao)this.getServletContext().getAttribute("managerDao");
+      ManagerDao managerDao = (ManagerDao)ContextLoaderListener.applicationContext.getBean("managerDao");
       ArrayList<Manager> list = managerDao.getList();
 
       out.println("<a href='form.html'>추가</a><br>");

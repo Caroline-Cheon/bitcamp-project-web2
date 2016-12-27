@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java89.ems2.dao.StudentDao;
 import bitcamp.java89.ems2.domain.Student;
+import bitcamp.java89.ems2.listener.ContextLoaderListener;
 
 @WebServlet("/student/list")
 public class StudentListServlet extends HttpServlet {
@@ -41,7 +42,7 @@ public class StudentListServlet extends HttpServlet {
       
       out.println("<h1>학생 정보</h1>");
       
-      StudentDao studentDao = (StudentDao)this.getServletContext().getAttribute("studentDao");
+      StudentDao studentDao = (StudentDao)ContextLoaderListener.applicationContext.getBean("studentDao");
       ArrayList<Student> list = studentDao.getList();
 
       out.println("<a href='form.html'>추가</a><br>");
