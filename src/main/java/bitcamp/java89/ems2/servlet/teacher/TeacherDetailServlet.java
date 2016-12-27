@@ -2,6 +2,7 @@ package bitcamp.java89.ems2.servlet.teacher;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java89.ems2.dao.TeacherDao;
+import bitcamp.java89.ems2.domain.Photo;
 import bitcamp.java89.ems2.domain.Teacher;
 
 @WebServlet("/teacher/detail")
@@ -35,12 +37,11 @@ public class TeacherDetailServlet extends HttpServlet {
       out.println("</head>");
       out.println("<body>");
       
-   // HeaderServlet에게 머리말 HTML 생성을 요청한다.
       RequestDispatcher rd = request.getRequestDispatcher("/header");
       rd.include(request, response); 
       
       out.println("<h1>강사 정보</h1>");
-      out.println("<form action='update' method='POST'>");
+      out.println("<form action='update' method='POST' enctype='multipart/form-data'>");
       
       TeacherDao teacherDao = (TeacherDao)this.getServletContext().getAttribute("teacherDao");
       Teacher teacher = teacherDao.getOne(memberNo);
@@ -63,6 +64,21 @@ public class TeacherDetailServlet extends HttpServlet {
           teacher.getTwitter());
       out.printf("<tr><th>트위터</th><td><input name='twitter' type='text' value='%s'></td></tr>\n",
           teacher.getTwitter());
+      
+      // 업데이트 부분
+      
+      List<Photo> photoList = teacher.getPhotoList();
+      for (int i = 0; i < 3; i++) {
+        out.printf("<tr><th>사진</th><td>"
+            + "<img src='../upload/%s' height='80'>"
+            + "<input name='photoPath%d' type='file'></td></tr>",
+            (i < photoList.size()) ? photoList.get(i).getFilePath() : null,
+             i + 1);
+      }
+
+      
+      
+      
       out.println("</table>");
       
       out.println("<button type='submit'>변경</button>");
