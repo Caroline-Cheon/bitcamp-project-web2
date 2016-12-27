@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.java89.ems2.dao.ManagerDao;
 import bitcamp.java89.ems2.dao.MemberDao;
+import bitcamp.java89.ems2.dao.StudentDao;
+import bitcamp.java89.ems2.dao.TeacherDao;
 import bitcamp.java89.ems2.domain.Member;
 
 @WebServlet("/auth/login")
@@ -52,6 +55,17 @@ public class LoginServlet extends HttpServlet {
     out.println("<h1>로그인</h1>");
     out.println("<form action='login' method='POST'>");
     out.println("<table border='1'>");
+    // 업데이트 부분
+    out.println("<tr>");
+    out.println("  <th>회원 유형</th>");
+    out.println("  <td>");
+    out.println("    <input type='radio' name='userType' value='student' checked>학생");
+    out.println("    <input type='radio' name='userType' value='teacher'>강사");
+    out.println("    <input type='radio' name='userType' value='mamager'>운영자");
+    out.println("  </td>");
+    out.println("</tr>");
+    
+    
     out.printf("<tr><th>이메일</th><td>"
         + "<input name='email' type='text' placeholder='예)hong@test.com'"
         + " value='%s'></td></tr>\n", email);
@@ -91,13 +105,19 @@ public class LoginServlet extends HttpServlet {
         response.addCookie(cookie);
       }
       
+      // 업데이트부분
       MemberDao memberDao = (MemberDao)this.getServletContext().getAttribute("memberDao");
+      Member member = memberDao.getOne(email, password);
       
-      if (memberDao.exist(email, password)) {   // 봐야할 부분
-        Member member = memberDao.getOne(email);
-        request.getSession().setAttribute("member", member);
-        response.sendRedirect("../student/list");
-        return;
+      if (member != null) {
+        String userType = request.getParameter("userType");
+        Member detailMember = this.getMemberInfo(userType, member.getMemberNo());
+        
+        if (detailMember != null) { // 로그인 성공인 경우
+          request.getSession().setAttribute("member", detailMember); // HttpSession 에 저장한다.
+          response.sendRedirect("../student/list");
+          return;
+        }
       }
       
       response.setHeader("Refresh", "2;url=login");
@@ -117,8 +137,9 @@ public class LoginServlet extends HttpServlet {
       rd.include(request, response);
       
       out.println("<h1>로그인 실패</h1>");
+      out.println("<p>이메일 또는 암호가 일치하지 않거나, 해당 유형의 사용자가 아닙니다.<p>");
       
-      // HeaderServlet에게 꼬리말 HTML 생성을 요청한다.
+      // FooterServlet에게 꼬리말 HTML 생성을 요청한다.
       rd = request.getRequestDispatcher("/footer");
       rd.include(request, response); 
       
@@ -131,6 +152,22 @@ public class LoginServlet extends HttpServlet {
       rd.forward(request, response); 
       return;
       
+    }
+  }
+  
+  //업데이트부분
+  private Member getMemberInfo(String userType, int memberNo) throws Exception {
+    if (userType.equals(Member.STUDENT)) {
+      StudentDao studentDao = (StudentDao)this.getServletContext().getAttribute("studentDao");
+      return studentDao.getOne(memberNo);
+      
+    } else if (userType.equals(Member.TEACHER)) {
+      TeacherDao teacherDao = (TeacherDao)this.getServletContext().getAttribute("teacherDao");
+      return teacherDao.getOne(memberNo);
+      
+    } else /*if (userType.equals(Member.MANAGER))*/{
+      ManagerDao managerDao = (ManagerDao)this.getServletContext().getAttribute("managerDao");
+      return managerDao.getOne(memberNo);
     }
   }
 }

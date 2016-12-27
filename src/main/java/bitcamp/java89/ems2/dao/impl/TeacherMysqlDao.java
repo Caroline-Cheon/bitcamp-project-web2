@@ -177,8 +177,9 @@ public class TeacherMysqlDao implements TeacherDao {
         }
       }
       rs.close();
-      
-      teacher.setPhotoList(photoList);
+      if (teacher != null) {  // 업데이트 (파라미터가 유효한 값만 넘어올 것이라고 가정했었다..)
+        teacher.setPhotoList(photoList);
+      }
       
       return teacher;
       

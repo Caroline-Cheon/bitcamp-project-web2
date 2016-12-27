@@ -39,25 +39,29 @@ public class MemberMysqlDao implements MemberDao {
       ds.returnConnection(con);
     }
   }
-  
-  public boolean exist(String email, String password) throws Exception {
+  // 업데이트부분
+  public Member getOne(String email, String password) throws Exception {
     Connection con = ds.getConnection(); 
     try (
       PreparedStatement stmt = con.prepareStatement(
-          "select count(*) from memb where email=? and pwd=password(?)"); ) {
+          "select mno, name, tel, email from memb where email=? and pwd=password(?)"); ) {
       
       stmt.setString(1, email);
       stmt.setString(2, password);
       ResultSet rs = stmt.executeQuery();
       
-      rs.next();
-      int count = rs.getInt(1);
-      rs.close();
-      
-      if (count > 0) {
-        return true;
+      if (rs.next()) {
+        Member member = new Member();
+        member.setMemberNo(rs.getInt("mno"));
+        member.setEmail(rs.getString("email"));
+        member.setName(rs.getString("name"));
+        member.setTel(rs.getString("tel"));
+        rs.close();
+        return member;
+        
       } else {
-        return false;
+        rs.close();
+        return null;
       }
     } finally {
       ds.returnConnection(con);
@@ -65,7 +69,7 @@ public class MemberMysqlDao implements MemberDao {
   }
   
   public void insert(Member member) throws Exception {
-    Connection con = ds.getConnection(); // 커넥션풀에서 한 개의 Connection 객체를 임대한다.
+    Connection con = ds.getConnection();
     try (
         PreparedStatement stmt = con.prepareStatement(
             "insert into memb(email,pwd,name,tel) values(?,password(?),?,?)",
@@ -88,7 +92,7 @@ public class MemberMysqlDao implements MemberDao {
   }
   
   public void update(Member member) throws Exception {
-    Connection con = ds.getConnection(); // 커넥션풀에서 한 개의 Connection 객체를 임대한다.
+    Connection con = ds.getConnection();
     try (
         PreparedStatement stmt = con.prepareStatement(
             "update memb set"
@@ -134,7 +138,7 @@ public class MemberMysqlDao implements MemberDao {
       stmt.setString(1, email);
       ResultSet rs = stmt.executeQuery();
       
-      if (rs.next()) { // 서버에서 레코드 한 개를 가져왔다면,
+      if (rs.next()) { 
         Member member = new Member();
         member.setMemberNo(rs.getInt("mno"));
         member.setEmail(rs.getString("email"));
