@@ -14,14 +14,14 @@
 - 매니저 사진 업로드
   - manager/form.html 파일 변경
     - form 태그에 enctype 속성 추가
-  - 도메인 객체 준비
-    - 사진 정보를 저장할 클래스 생성 : Photo.java 
-    - Teacher 클래스 변경 : 사진 정보를 저장할 인스턴스 변수 추가
   - ManagerAddServlet, ManagerUpdateServlet 클래스 변경
     - fileupload 라이브러리의 클래스를 사용하여 멀티파트 데이터 처리
   - ManagerDetailServlet 클래스 변경
     - 사진 출력
 - 강사 사진 업로드
+  - 도메인 객체 준비
+    - 사진 정보를 저장할 클래스 생성 : Photo.java 
+    - Teacher 클래스 변경 : 사진 정보를 저장할 인스턴스 변수 추가
   - teacher/form.html 파일 변경
     - form 태그에 enctype 속성 추가
   - TeacherAddServlet, TeacherUpdateServlet 클래스 변경
