@@ -21,6 +21,9 @@ dependencies {
   // 스프링 관련 라이브러리
   compile group: 'org.springframework', name: 'spring-context', version: '4.3.5.RELEASE'
   
+  // JSTL 확장 라이브러리
+  compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+  
   
   // 컴파일 할 때만 사용하고 배치에는 포함시키지 않는 라이브러리들
   providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
