@@ -21,6 +21,8 @@ public class TeacherListControl implements PageController {
   public String service(HttpServletRequest request, HttpServletResponse response) throws Exception {
     ArrayList<Teacher> list = teacherDao.getList();
     request.setAttribute("teachers", list);
-    return "/teacher/list.jsp";
+    request.setAttribute("title", "강사관리-목록");
+    request.setAttribute("contentPage", "/teacher/list.jsp");
+    return "/main.jsp";
   }
 }
