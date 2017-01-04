@@ -1,7 +1,6 @@
 package bitcamp.java89.ems2.servlet.student;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -39,23 +38,6 @@ public class StudentAddServlet extends HttpServlet {
       student.setSchoolName(dataMap.get("schoolName"));
       student.setPhotoPath(dataMap.get("photoPath"));
       
-      response.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = response.getWriter();
-  
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("<meta charset='UTF-8'>");
-      out.println("<meta http-equiv='Refresh' content='1;url=list'>");
-      out.println("<title>학생관리-등록</title>");
-      out.println("</head>");
-      out.println("<body>");
-      
-   // HeaderServlet에게 머리말 HTML 생성을 요청한다.
-      RequestDispatcher rd = request.getRequestDispatcher("/header");
-      rd.include(request, response); 
-      
-      out.println("<h1>등록 결과</h1>");
       StudentDao studentDao = (StudentDao)ContextLoaderListener.applicationContext.getBean("studentDao");
     
       if (studentDao.exist(student.getEmail())) {
@@ -73,20 +55,14 @@ public class StudentAddServlet extends HttpServlet {
       }
       
       studentDao.insert(student);
-      out.println("<p>등록하였습니다.</p>");
       
-      // HeaderServlet에게 꼬리말 HTML 생성을 요청한다.
-      rd = request.getRequestDispatcher("/footer");
-      rd.include(request, response); 
-      
-      out.println("</body>");
-      out.println("</html>");
+      response.sendRedirect("list");
       
     } catch (Exception e) {
       // 오류 정보를 ServletRequest에 담는다.
       request.setAttribute("error", e);
       
-      RequestDispatcher rd = request.getRequestDispatcher("/error");
+      RequestDispatcher rd = request.getRequestDispatcher("/error.jsp");
       rd.forward(request, response); 
       return;
     }

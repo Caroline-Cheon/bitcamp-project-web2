@@ -17,6 +17,11 @@
   - LoginServlet.java 변경
   - /auth/loginform.jsp 생성
   - /auth/loginfail.jsp 생성
+- 머리말, 꼬리말에 JSP 적용
+  - HeaderServlet.java 변경, /webapp/header.jsp 생성
+  - FooterServlet.java 삭제, /webapp/footer.jsp 생성
+- 오류 처리 서블릿에 JSP 적용
+  - ErrorServlet.java 삭제, /webapp/error.jsp 생성
 
 ## 1.4 - 스프링 IoC 컨테이너 적용
 - 스프링 라이브러리 파일 준비
