@@ -1,5 +1,15 @@
 # java89-project-web2
 
+## 1.6 - 프론트 컨트롤러 패턴 적용
+- 모든 클라이언트의 요청을 한 서블릿에서 받는다.
+  그리고 요청에 따라 작업할 객체에 실행을 위임한다.
+  - DispatcherServlet 클래스 작성
+- 프론트 컨트롤러와 페이지 컨트롤러의 호출 규칙을 정의
+  - PageController 인터페이스 생성
+-나머지 서블릿들은 일반 POJO 객체로 만든다.
+  - 기존 서블릿을 PageController 구현체로 변경한다.
+- AuthFilter를 이용하여 로그인 사용자의 사진 파일명을 준비한다.
+
 ## 1.5 - JSP를 사용하여 화면 출력 부분을 분리한다.
 - MVC 구조를 완성한다.
 - StudentListServlet에서 출력 분리

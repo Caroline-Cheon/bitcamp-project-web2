@@ -14,7 +14,7 @@
 <jsp:include page="../header.jsp"></jsp:include>
 
 <h1>로그인</h1>
-<form action='login' method='POST'>
+<form action='login.do' method='POST'>
 <table border='1'>
 <tr>
   <th>회원 유형</th>

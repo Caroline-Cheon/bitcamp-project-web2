@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<jsp:include page="../header"></jsp:include>
+<jsp:include page="../header.jsp"></jsp:include>
 
 <h1>매니저 정보</h1>
 <a href='form.html'>추가</a><br>
@@ -29,7 +29,7 @@
 <c:forEach var="manager" items="${managers}">
 <tr> 
   <td>${manager.memberNo}</td>
-  <td><a href='detail?memberNo=${manager.memberNo}'>${manager.name}</a></td>
+  <td><a href='detail.do?memberNo=${manager.memberNo}'>${manager.name}</a></td>
   <td>${manager.tel}</td>
   <td>${manager.position}</td>
   <td>${manager.fax}</td>

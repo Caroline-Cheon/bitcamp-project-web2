@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<jsp:include page="../header"></jsp:include>
+<jsp:include page="../header.jsp"></jsp:include>
 
 <h1>학생 정보</h1>
 <a href='form.html'>추가</a><br>
@@ -30,7 +30,7 @@
 <c:forEach var="student" items="${students}">
 <tr> 
   <td>${student.memberNo}</td>
-  <td><a href='detail?memberNo=${student.memberNo}'>${student.name}</a></td>
+  <td><a href='detail.do?memberNo=${student.memberNo}'>${student.name}</a></td>
   <td>${student.tel}</td>
   <td>${student.working}</td>
   <td>${student.grade}</td>
