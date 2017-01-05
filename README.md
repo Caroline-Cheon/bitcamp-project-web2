@@ -1,5 +1,13 @@
 # java89-project-web2
 
+## 2.1 - DispatcherServlet을 스프링의 프론트 컨트롤러로 대체하기
+- web.xml에 스프링 DispatcherServlet 등록하기
+  - /WEB-INF/conf/dispatcher-servlet.xml 생성
+  - /WEB-INF/conf/application-context.xml 변경
+- 우리가 만든 애노테이션과 프론트 컨트롤러와 RequestHandlerMapping 제거
+- 페이지 컨트롤러에 스프링의 애노테이션을 적용하라!
+
+
 ## 2.0 - 애노테이션을 적용하여 페이지 컨트롤러에서 호출될 메서드를 지정하기
 - @RequestMapping, @RequestParam 애노테이션 추가
   - annotation 패키지 생성

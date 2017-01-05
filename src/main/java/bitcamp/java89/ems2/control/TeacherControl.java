@@ -1,4 +1,4 @@
-package bitcamp.java89.ems2;
+package bitcamp.java89.ems2.control;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import bitcamp.java89.ems2.annotation.RequestMapping;
 import bitcamp.java89.ems2.dao.ManagerDao;
 import bitcamp.java89.ems2.dao.MemberDao;
 import bitcamp.java89.ems2.dao.StudentDao;
