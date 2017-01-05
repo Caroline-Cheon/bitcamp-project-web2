@@ -1,5 +1,16 @@
 # java89-project-web2
 
+## 1.9 - 스프링 필터와 리스너 사용하기
+- 스프링 필터와 리스너를 사용하려면 spring-webmvc 라이브러리를 추가해야 한다.
+  - build.gradle 변경
+  - "gradle eclipse" 다시 실행
+- CharacterEncodingFilter를 스프링 클래스로 대체한다.
+  - web.xml에 필터 설정 변경
+- ContextLoaderListener를 스프링 클래스로 대체한다.
+  -web.xml를 컨텍스트 파라미터 추가 
+- 위에 설정에 맞추어 프론트 컨트롤러 변경
+  - DispatcherServlet 클래스 변경
+
 ## 1.8 - 왼쪽에 메뉴 추가
 - 왼쪽 메뉴를 출력하는 JSP 생성
   - /webapp/sidemenu.jsp 생성
