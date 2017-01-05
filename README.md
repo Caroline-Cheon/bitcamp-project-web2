@@ -1,5 +1,18 @@
 # java89-project-web2
 
+## 2.0 - 애노테이션을 적용하여 페이지 컨트롤러에서 호출될 메서드를 지정하기
+- @RequestMapping, @RequestParam 애노테이션 추가
+  - annotation 패키지 생성
+  - 애노테이션 생성
+- RequestHandlerMapping 클래스 생성
+  - 페이지 컨트롤러의 메서드 중에서 @RequestMapping이 붙은 메서드를 추출하여
+    별도로 관리한다.
+  - 요청이 들어오면 이 클래스에 보관된 메서드를 찾아 호출한다.
+- 페이지 컨트롤러에 적용
+  - C(reate), R(ead), U(pdate), D(elete)에 해당하는 페이지 컨트롤러를
+    한 클래스로 합친다.
+  - StudentControl, ManagerControl, TeacherControl, AuthControl 클래스 생성
+
 ## 1.9 - 스프링 필터와 리스너 사용하기
 - 스프링 필터와 리스너를 사용하려면 spring-webmvc 라이브러리를 추가해야 한다.
   - build.gradle 변경
