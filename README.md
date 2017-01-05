@@ -1,5 +1,10 @@
 # java89-project-web2
 
+## 1.8 - 왼쪽에 메뉴 추가
+- 왼쪽 메뉴를 출력하는 JSP 생성
+  - /webapp/sidemenu.jsp 생성
+- main.jsp에서 CSS 및 HTML 조정
+
 ## 1.7 - 화면의 틀을 공유하여 공통 코드 작성을 줄이는 방법
 - 공통 화면의 틀을 작성한다.
   - /webapp/main.jsp
