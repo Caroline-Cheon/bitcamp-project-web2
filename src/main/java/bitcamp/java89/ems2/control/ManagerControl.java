@@ -49,7 +49,6 @@ public class ManagerControl {
       manager.setMemberNo(member.getMemberNo());
     }
     managerDao.insert(manager);
-    response.sendRedirect("list");
     return "redirect:list.do";
   }
   
