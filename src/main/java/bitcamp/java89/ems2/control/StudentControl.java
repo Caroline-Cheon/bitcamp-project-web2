@@ -1,14 +1,15 @@
 package bitcamp.java89.ems2.control;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import bitcamp.java89.ems2.dao.ManagerDao;
 import bitcamp.java89.ems2.dao.MemberDao;
@@ -20,27 +21,18 @@ import bitcamp.java89.ems2.util.MultipartUtil;
 
 @Controller
 public class StudentControl {
+  @Autowired ServletContext sc;
+  
   @Autowired MemberDao memberDao;
   @Autowired StudentDao studentDao;
   @Autowired ManagerDao managerDao;
   @Autowired TeacherDao teacherDao;
   
-  @RequestMapping("/student/add.do")
-  public String service(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    Map<String,String> dataMap = MultipartUtil.parse(request);
-    
-    Student student = new Student();
-    student.setEmail(dataMap.get("email"));
-    student.setPassword(dataMap.get("password"));
-    student.setName(dataMap.get("name"));
-    student.setTel(dataMap.get("tel"));
-    student.setWorking(Boolean.parseBoolean(dataMap.get("working")));
-    student.setGrade(dataMap.get("grade"));
-    student.setSchoolName(dataMap.get("schoolName"));
-    student.setPhotoPath(dataMap.get("photoPath"));
-    
+  @RequestMapping("/student/add")
+  public String service(Student student, MultipartFile photo) throws Exception {
+
     if (studentDao.exist(student.getEmail())) {
-      throw new Exception("같은 사용자 아이디가 존재합니다. 등록을 취소합니다.");
+      throw new Exception("같은 사용자 아d이디가 존재합니다. 등록을 취소합니다.");
     }
     if (!memberDao.exist(student.getEmail())) { // 강사나 매니저로 등록되지 않았다면,
       memberDao.insert(student);
@@ -49,60 +41,61 @@ public class StudentControl {
       Member member = memberDao.getOne(student.getEmail());
       student.setMemberNo(member.getMemberNo());
     }
+    if (photo.getSize() > 0) { // 파일이 업로드 되었다면,
+      String newFilename = MultipartUtil.generateFilename();
+      photo.transferTo(new File(sc.getRealPath("/upload/" + newFilename)));
+      student.setPhotoPath(newFilename);
+    }
+    
     studentDao.insert(student);
     return "redirect:list.do";
   }
   
-  @RequestMapping("/student/list.do")
-  public String list(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  @RequestMapping("/student/list")
+  public String list(Model model) throws Exception {
     ArrayList<Student> list = studentDao.getList();
-    request.setAttribute("students", list);
-    request.setAttribute("title", "학생관리-목록");
-    request.setAttribute("contentPage", "/student/list.jsp");
-    return "/main.jsp";
+    model.addAttribute("students", list);
+    model.addAttribute("title", "학생관리-목록");
+    model.addAttribute("contentPage", "/student/list.jsp");
+    return "main";
   }
   
-  @RequestMapping("/student/detail.do")
-  public String detail(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+  @RequestMapping("/student/detail")
+  public String detail(int memberNo, Model model) throws Exception {
+    //int memberNo = Integer.parseInt(request.getParameter("memberNo"));
     
     Student student = studentDao.getOne(memberNo);
     
     if (student == null) {
       throw new Exception("해당 학생이 없습니다.");
     }
-    request.setAttribute("student", student);
-    request.setAttribute("title", "학생관리-상세정보");
-    request.setAttribute("contentPage", "/student/detail.jsp");
-    return "/main.jsp";
+    model.addAttribute("student", student);
+    model.addAttribute("title", "학생관리-상세정보");
+    model.addAttribute("contentPage", "/student/detail.jsp");
+    return "main";
   }
   
-  @RequestMapping("/student/update.do")
-  public String update(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    Map<String,String> dataMap = MultipartUtil.parse(request);
-    
-    Student student = new Student();
-    student.setMemberNo(Integer.parseInt(dataMap.get("memberNo")));
-    student.setEmail(dataMap.get("email"));
-    student.setPassword(dataMap.get("password"));
-    student.setName(dataMap.get("name"));
-    student.setTel(dataMap.get("tel"));
-    student.setWorking(Boolean.parseBoolean(dataMap.get("working")));
-    student.setGrade(dataMap.get("grade"));
-    student.setSchoolName(dataMap.get("schoolName"));
-    student.setPhotoPath(dataMap.get("photoPath"));
+  @RequestMapping("/student/update")
+  public String update(Student student, MultipartFile photo) throws Exception {
     
     if (!studentDao.exist(student.getMemberNo())) {
       throw new Exception("학생을 찾지 못했습니다.");
     }
     memberDao.update(student);
+    
+    if (photo.getSize() > 0) { // 파일이 업로드 되었다면,
+      String newFilename = MultipartUtil.generateFilename();
+      photo.transferTo(new File(sc.getRealPath("/upload/" + newFilename)));
+      student.setPhotoPath(newFilename);
+    }
     studentDao.update(student);
+    
     return "redirect:list.do";
   }
   
-  @RequestMapping("/student/delete.do")
-  public String delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+  @RequestMapping("/student/delete")
+  public String delete(int memberNo) throws Exception {
+    //int memberNo = Integer.parseInt(request.getParameter("memberNo"));
     
     if (!studentDao.exist(memberNo)) {
       throw new Exception("학생을 찾지 못했습니다.");

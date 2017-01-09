@@ -1,11 +1,13 @@
 package bitcamp.java89.ems2.control;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import bitcamp.java89.ems2.dao.ManagerDao;
@@ -21,11 +23,9 @@ public class AuthControl {
   @Autowired TeacherDao teacherDao;
   @Autowired ManagerDao managerDao;
 
-  @RequestMapping("/auth/login.do")
-  public String login(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    String email = request.getParameter("email");
-    String password = request.getParameter("password");
-    String saveEmail = request.getParameter("saveEmail");
+  @RequestMapping("/auth/login")
+  public String login(String email, String password, String saveEmail, String userType, 
+      HttpServletResponse response, HttpSession session, Model model) throws Exception {
     
     if (saveEmail != null) {
       // 쿠키를 웹 브라우저에게 보낸다.
@@ -43,18 +43,17 @@ public class AuthControl {
     Member member = memberDao.getOne(email, password);
     
     if (member != null) {
-      String userType = request.getParameter("userType");
       Member detailMember = this.getMemberInfo(userType, member.getMemberNo());
       
       if (detailMember != null) { // 로그인 성공인 경우
-        request.getSession().setAttribute("member", detailMember); // HttpSession 에 저장한다.
+        session.setAttribute("member", detailMember); // HttpSession 에 저장한다.
         return "redirect:../student/list.do";
       }
     }
     response.setHeader("Refresh", "2;url=loginform.do");
-    request.setAttribute("title", "로그인");
-    request.setAttribute("contentPage", "/auth/loginfail.jsp");
-    return "/main.jsp";
+    model.addAttribute("title", "로그인");
+    model.addAttribute("contentPage", "/auth/loginfail.jsp");
+    return "main";
   }
   
   private Member getMemberInfo(String userType, int memberNo) throws Exception {
@@ -69,16 +68,16 @@ public class AuthControl {
     }
   }
   
-  @RequestMapping("/auth/loginform.do")
-  public String loginForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    request.setAttribute("title", "로그인");
-    request.setAttribute("contentPage", "/auth/loginform.jsp");
-    return "/main.jsp";
+  @RequestMapping("/auth/loginform")
+  public String loginForm(Model model) throws Exception {
+    model.addAttribute("title", "로그인");
+    model.addAttribute("contentPage", "/auth/loginform.jsp");
+    return "main";
   }
   
-  @RequestMapping("/auth/logout.do")
-  public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    request.getSession().invalidate();
+  @RequestMapping("/auth/logout")
+  public String logout(HttpSession session) throws Exception {
+    session.invalidate();
     return "redirect:loginform.do";
   }
 }
