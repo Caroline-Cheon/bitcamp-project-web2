@@ -3,24 +3,50 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
   <!-- 스프링 IoC 컨테이너가 클래스를 찾는 위치를 지정한다. 
-       => 지정한 패키지와 그 하위 패키지를 모두 뒤져서
-          @Component, @Controller, @Repository ,@Service애노테이션이 붙은 
+       => 지정한 패키지와 하위 패키지를 모두 뒤져서 
+          @Component, @Controller, @Repository, @Service 애노테이션이 붙은 
           클래스를 찾아 인스턴스를 생성한다.
   -->
   <context:component-scan base-package="bitcamp.java89.ems2">
-    <context:exclude-filter type="annotation"
-                             expression="org.springframework.stereotype.Controller"/>
+    <context:exclude-filter type="annotation" 
+                            expression="org.springframework.stereotype.Controller"/>
   </context:component-scan>
+  
+  <!--  프로퍼티 파일을 로딩하고 그 값을 관리하는 객체  -->
+  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations" value="/WEB-INF/conf/jdbc.properties"/>
+  </bean>
+  
+  <!-- DB 커넥션을 관리하는 객체  -->
+  <bean id="dataSource" destroy-method="close"
+        class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="driverClassName" value="${jdbc.driverClassName}"/>
+    <property name="url" value="${jdbc.url}"/>
+    <property name="username" value="${jdbc.username}"/>
+    <property name="password" value="${jdbc.password}"/>
+  </bean>
+  
+  <!-- DB 커넥션의 트랜잭션을 관리하는 객체 -->
+  <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+  </bean>
+  
+  <!-- Mybatis 퍼시스턴스 프레임워크 객체 -->
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="mapperLocations" value="classpath*:bitcamp/java89/ems2/dao/*Dao.xml" />
+    <property name="typeAliasesPackage" value="bitcamp.java89.ems2.domain" />
+  </bean>
+  
+  <!-- DAO 인터페이스의 Mybatis 구현체를 만들어주는 객체  -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <!-- DAO 인터페이스가 있는 패키지를 지정한다. -->
+    <property name="basePackage" value="bitcamp.java89.ems2.dao" />
+  </bean>
 
 </beans>
-
-
-
-
-
-

@@ -1,15 +1,14 @@
 package bitcamp.java89.ems2.control;
 
-import javax.servlet.ServletContext;
+import java.util.HashMap;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import bitcamp.java89.ems2.dao.ManagerDao;
 import bitcamp.java89.ems2.dao.MemberDao;
 import bitcamp.java89.ems2.dao.StudentDao;
@@ -39,8 +38,11 @@ public class AuthControl {
       cookie.setMaxAge(0);
       response.addCookie(cookie);
     }
+    HashMap<String,String> paramMap = new HashMap<>();
+    paramMap.put("email", email);
+    paramMap.put("password", password);
     
-    Member member = memberDao.getOne(email, password);
+    Member member = memberDao.getOneByEmailPassword(paramMap);
     
     if (member != null) {
       Member detailMember = this.getMemberInfo(userType, member.getMemberNo());
@@ -61,7 +63,7 @@ public class AuthControl {
       return studentDao.getOne(memberNo);
       
     } else if (userType.equals(Member.TEACHER)) {
-      return teacherDao.getOne(memberNo);
+      return teacherDao.getOneWithPhoto(memberNo);
       
     } else /*if (userType.equals(Member.MANAGER))*/{
       return managerDao.getOne(memberNo);

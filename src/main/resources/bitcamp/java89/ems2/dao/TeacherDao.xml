@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="bitcamp.java89.ems2.dao.TeacherDao">
+
+  <resultMap type="teacher" id="teacher-map">
+    <id     column="mno"            property="memberNo"/>
+    <result column="name"           property="name"/>
+    <result column="email"          property="email"/>
+    <result column="pwd"            property="password"/>
+    <result column="tel"            property="tel"/>
+    <result column="hmpg"           property="homapage"/>
+    <result column="fcbk"           property="facebook"/>
+    <result column="twit"           property="twitter"/>
+    
+    <collection property="photoList" ofType="photo">
+      <id     column="tpno" property="no"/>
+      <result column="path" property="filePath"/>
+    </collection>
+  </resultMap>
+  
+  <select id="count" parameterType="string" resultType="int">
+    select count(*)
+    from tcher t
+      left outer join memb m on t.tno=m.mno
+    where email=#{value}
+  </select>
+  
+  <select id="countByNo" parameterType="int" resultType="int">
+    select count(*)
+    from tcher t
+      inner join memb m on t.tno=m.mno
+    where t.tno=#{value}
+  </select>
+  
+  <select id="getList" resultMap="teacher-map">
+    select
+       m.mno, 
+       m.name, 
+       m.tel, 
+       m.email,
+       t.hmpg,
+       t.fcbk,
+       t.twit,
+       tp.tpno,
+       tp.path 
+    from memb m 
+         inner join tcher t on t.tno=m.mno
+         inner join tch_phot tp on t.tno=tp.tno
+  </select>
+  
+  <select id="getOneWithPhoto" parameterType="int" resultMap="teacher-map">
+    select 
+      m.mno, 
+      m.name, 
+      m.email, 
+      m.tel, 
+      t.hmpg, 
+      t.fcbk, 
+      t.twit, 
+      tp.tpno, 
+      tp.path
+    from memb m 
+             inner join tcher t on m.mno=t.tno
+             left outer join tch_phot tp on t.tno=tp.tno
+    where m.mno=#{value}
+  </select>
+  
+  <insert id="insert" parameterType="teacher" 
+          useGeneratedKeys="true" keyColumn="mno" keyProperty="memberNo">
+    insert into tcher(tno,hmpg,fcbk,twit)
+    values(
+      #{memberNo}, 
+      #{homepage}, 
+      #{facebook}, 
+      #{twitter})
+  </insert>
+  
+  <insert id="insertPhotoList" parameterType="teacher" 
+          useGeneratedKeys="true" keyColumn="tpno" keyProperty="no">
+    insert into tch_phot(tno,path)
+    values(
+    #{name}, 
+    #{filePath})
+  </insert>
+  
+  
+  <update id="update" parameterType="teacher">
+    update tcher set
+      hmpg=#{homepage}, 
+      fcbk=#{facebook}, 
+      twit=#{twitter}
+    where tno=#{memberNo}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    delete from tch_phot where tno=#{value}
+    delete from tcher where tno=#{value}
+  </delete>
+  
+</mapper>

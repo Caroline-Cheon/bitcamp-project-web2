@@ -2,11 +2,8 @@ package bitcamp.java89.ems2.control;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,10 +31,10 @@ public class ManagerControl {
   @RequestMapping("/manager/add")
   public String add(Manager manager, MultipartFile photo) throws Exception {
     
-    if (managerDao.exist(manager.getEmail())) {
+    if (managerDao.count(manager.getEmail()) > 0) {
       throw new Exception("같은 사용자 아이디가 존재합니다. 등록을 취소합니다.");
     }
-    if (!memberDao.exist(manager.getEmail())) { // 강사나 매니저로 등록되지 않았다면,
+    if (memberDao.count(manager.getEmail()) == 0) { // 강사나 매니저로 등록되지 않았다면,
       memberDao.insert(manager);
       
     } else { // 강사나 매니저로 이미 등록된 사용자라면 기존의 회원번호를 사용한다.
@@ -81,7 +78,7 @@ public class ManagerControl {
   @RequestMapping("/manager/update")
   public String update(Manager manager, MultipartFile photo) throws Exception {
   
-    if (!managerDao.exist(manager.getMemberNo())) {
+    if (managerDao.countByNo(manager.getMemberNo()) == 0) {
       throw new Exception("사용자를 찾지 못했습니다.");
     }
     memberDao.update(manager);
@@ -100,12 +97,12 @@ public class ManagerControl {
   @RequestMapping("/manager/delete")
   public String delete(int memberNo) throws Exception {
     
-    if (!managerDao.exist(memberNo)) {
+    if (managerDao.countByNo(memberNo) == 0) {
       throw new Exception("매니저를 찾지 못했습니다.");
     }
     managerDao.delete(memberNo);
     
-    if (!studentDao.exist(memberNo) && !teacherDao.exist(memberNo)) {
+    if (studentDao.countByNo(memberNo) == 0 && teacherDao.countByNo(memberNo) == 0) {
       memberDao.delete(memberNo);
     }
     return "redirect:list.do";
