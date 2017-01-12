@@ -55,6 +55,8 @@ public class TeacherControl {
     teacher.setPhotoList(photoList);
     
     teacherDao.insert(teacher);
+    teacherDao.insertPhotoList(teacher); 
+    
     return "redirect:list.do";
   }
   
@@ -110,6 +112,7 @@ public class TeacherControl {
     if (teacherDao.countByNo(memberNo) == 0) {
       throw new Exception("강사를 찾지 못했습니다.");
     }
+    teacherDao.deletePhotoList(memberNo);
     teacherDao.delete(memberNo);
     
     if (studentDao.countByNo(memberNo) == 0 && managerDao.countByNo(memberNo) == 0) {
@@ -117,4 +120,6 @@ public class TeacherControl {
     }
     return "redirect:list.do";
   }
+
+
 }

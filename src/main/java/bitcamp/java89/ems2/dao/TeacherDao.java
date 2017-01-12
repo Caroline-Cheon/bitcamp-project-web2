@@ -9,7 +9,9 @@ public interface TeacherDao {
   ArrayList<Teacher> getList() throws Exception;
   int count(String email) throws Exception;
   void insert(Teacher teacher) throws Exception;
+  void insertPhotoList(Teacher teacher) throws Exception;
   Teacher getOneWithPhoto(int memberNo) throws Exception;
   void update(Teacher teacher) throws Exception;
   void delete(int memberNo) throws Exception;
+  void deletePhotoList(int memberNo) throws Exception;
 }
