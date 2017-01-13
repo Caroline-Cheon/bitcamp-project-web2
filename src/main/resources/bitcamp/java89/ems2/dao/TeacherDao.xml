@@ -68,8 +68,7 @@
     where m.mno=#{value}
   </select>
   
-  <insert id="insert" parameterType="teacher" 
-          useGeneratedKeys="true" keyColumn="mno" keyProperty="memberNo">
+  <insert id="insert" parameterType="teacher">
     insert into tcher(tno,hmpg,fcbk,twit)
     values(
       #{memberNo}, 
@@ -78,13 +77,13 @@
       #{twitter})
   </insert>
 
- <insert id="insertPhotoList" parameterType="teacher">
-  insert into tch_phot(tno,path)
-    <foreach item="photo" collection="photoList" separator=",">
-      values(#{memberNo}, #{photo.filePath})
+  <insert id="insertPhoto" parameterType="teacher">
+    insert into tch_phot(tno,path) 
+    values
+    <foreach collection="photoList" item="photo" separator=",">
+      (#{memberNo}, #{photo.filePath})
     </foreach>
- </insert>
-  
+  </insert> 
   
   <update id="update" parameterType="teacher">
     update tcher set
@@ -94,16 +93,11 @@
     where tno=#{memberNo}
   </update>
   
-  <delete id="deletePhotoList" parameterType="int">
+  <delete id="deletePhoto" parameterType="int">
     delete from tch_phot where tno=#{value}
   </delete>
   
   <delete id="delete" parameterType="int">
     delete from tcher where tno=#{value}
   </delete>
-  
-  
-  
-  
-  
 </mapper>
