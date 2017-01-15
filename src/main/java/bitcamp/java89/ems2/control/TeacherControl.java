@@ -55,7 +55,10 @@ public class TeacherControl {
     teacher.setPhotoList(photoList);
     
     teacherDao.insert(teacher);
-    teacherDao.insertPhotoList(teacher); 
+    
+    if (photoList.size() > 0) {
+      teacherDao.insertPhoto(teacher); 
+    }
     
     return "redirect:list.do";
   }
@@ -103,6 +106,12 @@ public class TeacherControl {
     teacher.setPhotoList(photoList); 
     
     teacherDao.update(teacher);
+    teacherDao.deletePhoto(teacher.getMemberNo());
+    
+    if (photoList.size() > 0) {
+      teacherDao.insertPhoto(teacher);
+    }
+    
     return "redirect:list.do";
   }
   
@@ -112,7 +121,7 @@ public class TeacherControl {
     if (teacherDao.countByNo(memberNo) == 0) {
       throw new Exception("강사를 찾지 못했습니다.");
     }
-    teacherDao.deletePhotoList(memberNo);
+    teacherDao.deletePhoto(memberNo);
     teacherDao.delete(memberNo);
     
     if (studentDao.countByNo(memberNo) == 0 && managerDao.countByNo(memberNo) == 0) {
