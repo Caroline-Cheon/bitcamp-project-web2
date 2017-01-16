@@ -1,7 +1,7 @@
 package bitcamp.java89.ems2.control;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -11,49 +11,32 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import bitcamp.java89.ems2.dao.ManagerDao;
-import bitcamp.java89.ems2.dao.MemberDao;
-import bitcamp.java89.ems2.dao.StudentDao;
-import bitcamp.java89.ems2.dao.TeacherDao;
-import bitcamp.java89.ems2.domain.Member;
 import bitcamp.java89.ems2.domain.Student;
+import bitcamp.java89.ems2.service.StudentService;
 import bitcamp.java89.ems2.util.MultipartUtil;
 
 @Controller
-public class StudentControl {
+public class StudentControl {  // 페이지 컨트롤러!!
+  // data를 직접 사용하지 않고 service를 경유한다.
   @Autowired ServletContext sc;
-  
-  @Autowired MemberDao memberDao;
-  @Autowired StudentDao studentDao;
-  @Autowired ManagerDao managerDao;
-  @Autowired TeacherDao teacherDao;
+  @Autowired StudentService studentService;
   
   @RequestMapping("/student/add")
-  public String service(Student student, MultipartFile photo) throws Exception {
-
-    if (studentDao.count(student.getEmail()) > 0) {
-      throw new Exception("같은 사용자 아d이디가 존재합니다. 등록을 취소합니다.");
-    }
-    if (memberDao.count(student.getEmail()) == 0) { // 강사나 매니저로 등록되지 않았다면,
-      memberDao.insert(student);
-      
-    } else { // 강사나 매니저로 이미 등록된 사용자라면 기존의 회원번호를 사용한다.
-      Member member = memberDao.getOne(student.getEmail());
-      student.setMemberNo(member.getMemberNo());
-    }
+  public String add(Student student, MultipartFile photo) throws Exception {
+    // 페이지 컨트롤러는 입력 파라미터 값을 가공하여 모델 객체에게 전달하는 일을 한다.
     if (photo.getSize() > 0) { // 파일이 업로드 되었다면,
       String newFilename = MultipartUtil.generateFilename();
       photo.transferTo(new File(sc.getRealPath("/upload/" + newFilename)));
-      student.setPhotoPath(newFilename);
+      student.setPhotoPath(newFilename); // 새이름으로 지정하고 설정
     }
+    studentService.add(student); // 실제로 업무를 하는 service에게 보낸다
     
-    studentDao.insert(student);
     return "redirect:list.do";
   }
   
   @RequestMapping("/student/list")
   public String list(Model model) throws Exception {
-    ArrayList<Student> list = studentDao.getList();
+    List<Student> list = studentService.getList();
     model.addAttribute("students", list);
     model.addAttribute("title", "학생관리-목록");
     model.addAttribute("contentPage", "/student/list.jsp");
@@ -63,11 +46,12 @@ public class StudentControl {
   @RequestMapping("/student/detail")
   public String detail(int memberNo, Model model) throws Exception {
     
-    Student student = studentDao.getOne(memberNo);
+    Student student = studentService.getDetail(memberNo);
     
     if (student == null) {
       throw new Exception("해당 학생이 없습니다.");
     }
+    // 페이지 컨트롤러는 모델 객체가 리턴한 값을 JSP가 사용할 수 있도록 가공하는 일을 한다.
     model.addAttribute("student", student);
     model.addAttribute("title", "학생관리-상세정보");
     model.addAttribute("contentPage", "/student/detail.jsp");
@@ -77,32 +61,19 @@ public class StudentControl {
   @RequestMapping("/student/update")
   public String update(Student student, MultipartFile photo) throws Exception {
     
-    if (studentDao.countByNo(student.getMemberNo()) == 0) {
-      throw new Exception("학생을 찾지 못했습니다.");
-    }
-    memberDao.update(student);
-    
     if (photo.getSize() > 0) { // 파일이 업로드 되었다면,
       String newFilename = MultipartUtil.generateFilename();
       photo.transferTo(new File(sc.getRealPath("/upload/" + newFilename)));
       student.setPhotoPath(newFilename);
     }
-    studentDao.update(student);
+    studentService.update(student);
     
     return "redirect:list.do";
   }
   
   @RequestMapping("/student/delete")
   public String delete(int memberNo) throws Exception {
-    
-    if (studentDao.countByNo(memberNo) == 0) {
-      throw new Exception("학생을 찾지 못했습니다.");
-    }
-    studentDao.delete(memberNo);
-               
-    if (managerDao.countByNo(memberNo) == 0 && !(teacherDao.countByNo(memberNo) == 0)) {
-      memberDao.delete(memberNo);
-    }
+    studentService.delete(memberNo);
     return "redirect:list.do";
   }
 }
