@@ -1,5 +1,14 @@
 # bitcamp-project-web2
 
+## 2.4 - 로그인 여부 검사하기
+방법1) 서블릿 필터 이용하기
+- LoginCheckFilter 생성
+  - 로그인을 수행하는 URL을 제외하고, 나머지 모든 URL에 대해서는 로그인 여부를 검사한다.
+  - 로그인이 되어 있지 않으면 로그인 화면으로 리다이렉트 한다.
+방법2) 스프링의 인터셉터 이용하기
+- LoginInterceptor 생성
+  - 위의 필터와 같이 동작하게 한다.
+
 ## 2.3 - Persistence Framework인 Mybatis 적용하기
 - DBMS 접속 정보를 담은 프로퍼티 파일 준비
   - /WEB-INF/conf/jdbc.properties 준비
