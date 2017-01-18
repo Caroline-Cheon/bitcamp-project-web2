@@ -2,10 +2,16 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
   <!-- 스프링 IoC 컨테이너가 클래스를 찾는 위치를 지정한다. 
        => 지정한 패키지와 하위 패키지를 모두 뒤져서 
@@ -48,5 +54,22 @@
     <!-- DAO 인터페이스가 있는 패키지를 지정한다. -->
     <property name="basePackage" value="bitcamp.java89.ems2.dao" />
   </bean>
+  
+  <!-- 트랜잭션을 다루는 Advice 등록 -->
+  <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="*"/>
+        </tx:attributes>
+  </tx:advice>
+  
+  <!-- 트랜잭션 Advice를 어떤 메서드에 끼워 넣을 것인지 지정한다.-->
+  <aop:config>
+    <!-- 트랜잭션 Advice를 꼽을 위치 지정 -->
+    <aop:pointcut id="serviceOperation" expression="execution(* bitcamp.java89.ems2.service..*(..))" />
+    <!-- 위치와 Advice를 연결한다. -->
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation"/>
+  </aop:config>
+  
 
 </beans>
