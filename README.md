@@ -1,5 +1,11 @@
 # bitcamp-project-web2
 
+## 2.8 - Log4J 적용
+- log4j 의존 라이브러리 추가
+  - build.gradle 변경
+- log4j.properties 파일 추가
+  - 콘솔 출력 설정
+  
 ## 2.7 - 요청 파라미터의 커스텀 에디터 등록하기
 - @ControllerAdvice를 이용하여 등록
 - WebControllerAdvice 클래스 추가
