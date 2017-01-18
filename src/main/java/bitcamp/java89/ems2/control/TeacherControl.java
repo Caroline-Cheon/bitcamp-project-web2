@@ -23,12 +23,19 @@ public class TeacherControl {
   
   @Autowired TeacherService teacherService;
   
+  @RequestMapping("/teacher/form")
+  public String form(Model model) {
+    model.addAttribute("title", "강사 입력폼");
+    model.addAttribute("contentPage", "teacher/form.jsp");
+    return "main";
+  }
+  
   @RequestMapping("/teacher/list")
   public String list(Model model) throws Exception {
     List<Teacher> list = teacherService.getList();
     model.addAttribute("teachers", list);
     model.addAttribute("title", "강사관리-목록");
-    model.addAttribute("contentPage", "/teacher/list.jsp");
+    model.addAttribute("contentPage", "teacher/list.jsp");
     return "main";
   }
   
@@ -67,7 +74,7 @@ public class TeacherControl {
     
     model.addAttribute("teacher", teacher);
     model.addAttribute("title", "강사관리-상세정보");
-    model.addAttribute("contentPage", "/teacher/detail.jsp");
+    model.addAttribute("contentPage", "teacher/detail.jsp");
     
     return "main";
   }

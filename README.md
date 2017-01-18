@@ -1,5 +1,17 @@
 # bitcamp-project-web2
 
+## 2.9 - 클라이언트에서 JSP를 직접 접근하지 못하게 막아야 한다. 
+- JSP 파일을 WEB-INF 밑으로 옮긴다.
+  - 왜? WEB-INF 폴더는 클라이언트에서 접근할 수 없다.
+  - WEB-INF 폴더는 웹애플리케이션의 설정 파일을 두는 폴더이기 때문이다.
+- 작업
+  1) /WEB-INF/view 폴더 생성  
+  2) view 폴더로 JSP 파일을 옮긴다.
+  3) dispatcher-servlet.xml 파일에 JSP prefix 경로를 바꾼다.
+  4) form.html을 JSP로 바꾼다.
+  5) 각 페이지 컨트롤러에 form.jsp로 보내는 메서드를 추가한다.
+  6) list.jsp에서 form.html 링크를 form.do로 바꾼다.
+  
 ## 2.8 - Log4J 적용
 - log4j 의존 라이브러리 추가
   - build.gradle 변경

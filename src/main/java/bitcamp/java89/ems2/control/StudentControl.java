@@ -21,6 +21,13 @@ public class StudentControl {  // 페이지 컨트롤러!!
   @Autowired ServletContext sc;
   @Autowired StudentService studentService;
   
+  @RequestMapping("/student/form")
+  public String form(Model model) {
+    model.addAttribute("title", "학생 입력폼");
+    model.addAttribute("contentPage", "student/form.jsp");
+    return "main";
+  }
+  
   @RequestMapping("/student/add")
   public String add(Student student, MultipartFile photo) throws Exception {
     // 페이지 컨트롤러는 입력 파라미터 값을 가공하여 모델 객체에게 전달하는 일을 한다.
@@ -39,7 +46,7 @@ public class StudentControl {  // 페이지 컨트롤러!!
     List<Student> list = studentService.getList();
     model.addAttribute("students", list);
     model.addAttribute("title", "학생관리-목록");
-    model.addAttribute("contentPage", "/student/list.jsp");
+    model.addAttribute("contentPage", "student/list.jsp");
     return "main";
   }
   
@@ -54,7 +61,7 @@ public class StudentControl {  // 페이지 컨트롤러!!
     // 페이지 컨트롤러는 모델 객체가 리턴한 값을 JSP가 사용할 수 있도록 가공하는 일을 한다.
     model.addAttribute("student", student);
     model.addAttribute("title", "학생관리-상세정보");
-    model.addAttribute("contentPage", "/student/detail.jsp");
+    model.addAttribute("contentPage", "student/detail.jsp");
     return "main";
   }
   

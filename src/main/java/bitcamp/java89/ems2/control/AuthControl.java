@@ -14,6 +14,7 @@ import bitcamp.java89.ems2.service.AuthService;
 public class AuthControl {
   @Autowired AuthService authService;
 
+  
   @RequestMapping("/auth/login")
   public String login(String email, String password, String saveEmail, String userType, 
       HttpServletResponse response, HttpSession session, Model model) throws Exception {
@@ -36,7 +37,7 @@ public class AuthControl {
     if (member == null) { // 멤버정보가 없으면 로그인 실패이다.
       response.setHeader("Refresh", "2;url=loginform.do");
       model.addAttribute("title", "로그인");
-      model.addAttribute("contentPage", "/auth/loginfail.jsp");
+      model.addAttribute("contentPage", "auth/loginfail.jsp");
       return "main";
     }
       
@@ -47,7 +48,7 @@ public class AuthControl {
   @RequestMapping("/auth/loginform")
   public String loginForm(Model model) throws Exception {
     model.addAttribute("title", "로그인");
-    model.addAttribute("contentPage", "/auth/loginform.jsp");
+    model.addAttribute("contentPage", "auth/loginform.jsp");
     return "main";
   }
   
