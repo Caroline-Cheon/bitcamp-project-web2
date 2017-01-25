@@ -49,6 +49,9 @@ dependencies {
   // Log4j 의존 라이브러리 가져오기
   compile group: 'log4j', name: 'log4j', version: '1.2.17'
   
+  // 객체를 JSON 문자열로 자동 변환시켜주는 ViewResolver 라이브러리 가져오기
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.6'
+  
   // 컴파일 할 때만 사용하고 배치에는 포함시키지 않는 라이브러리들
   providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
   

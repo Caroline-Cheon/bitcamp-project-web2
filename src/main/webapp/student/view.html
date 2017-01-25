@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>학생관리-조회</title>
+<style type="text/css">
+body {
+  font-family: '맑은 고딕', 'sans-serif'';
+}
+
+#sidebar {
+  color:white;
+  padding: 10px 5px;
+  float: left;
+  margin: 5px 5px 5px 0px ;
+}
+
+#sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+#content {
+  margin-left: 200px;
+}
+
+#footer {
+  clear: left;
+}
+
+</style>
+</head>
+<body>
+
+<div id='header' style='background-color:gray; height:40px;position:relative;'></div>
+
+<div id='sidebar'  style='background-color:skyblue; width:180px; height:400px;'></div>
+
+<div id="content">
+<h1>학생 정보</h1>
+<form action='update.do' method='POST' enctype='multipart/form-data'>
+<table border='1'>
+<tr><th>이메일</th><td><input id='email' type='text'></td></tr>
+<tr><th>암호</th><td><input id='password' type='password'></td></tr>
+<tr><th>이름</th><td><input id='name' type='text'></td></tr>
+<tr><th>전화</th><td><input id='tel' type='text' ></td></tr>
+<tr><th>재직여부</th><td>
+  <input type='radio' id='working' value='true'>재직중
+  <input type='radio' id='not-working' value='false'>실업/미취업</td></tr>
+<tr><th>최종학력</th><td>
+	<select id='grade'>
+	  <option value='고졸' >고졸</option>
+	  <option value='전문학사' >전문학사</option>
+	  <option value='학사'>학사</option>
+	  <option value='석사' >석사</option>
+	  <option value='박사' >박사</option>
+	</select>
+<tr><th>최종학교</th><td><input id='school-name' type='text'></td></tr>
+<tr><th>사진</th><td><img id='photo-img' height='80'>
+    <input id='photo' type='file'></td></tr>
+</table>
+<button id='updBtn' type='button'>변경</button>
+<button id='delBtn'type='button'>삭제</button>
+<button id='listBtn'type='button'>목록</button>
+</form>
+</div>
+
+<div id='footer'  style='background-color:gray; height:20px; margin-top:20px;'></div>
+
+<script src="../js/bit.js"></script>
+<script src="../js/common.js"></script>
+<script>
+/*
+//header.html을 가져와서 붙인다.
+get('../header.html', function(result) {
+  document.querySelector('#header').innerHTML = result;
+});
+
+// sidebar.html을 가져와서 붙인다.
+get('../sidebar.html', function(result) {
+  document.querySelector('#sidebar').innerHTML = result;
+});
+
+// footer.html을 가져와서 붙인다.
+get('../footer.html', function(result) {
+  document.querySelector('#footer').innerHTML = result;
+});
+*/
+var memberNo = location.href.split('?')[1].split('=')[1];
+
+//학생 목록 가져와서 tr 태그를 만들어 붙인다.
+get('detail.json?memberNo=' + memberNo, function(jsonText) {
+	// result JSON 문자열을 자바스크립트 객체로 만든다.
+  var ajaxResult = JSON.parse(jsonText).ajaxResult; 
+	//ajaxResult는 우리가 정한 것이 아님 StudentJsonControl.java 에서 메소드 리턴 확인
+  var status = ajaxResult.status;
+  
+  if (status != "success") {
+	  alert(ajaxResult.data);
+	  return;
+  }
+  
+  var student = ajaxResult.data; // data를 가져온 뒤에 화면에 뿌릴 것이다.
+  console.log(student);
+  
+  document.querySelector('#email').value = student.email;
+  document.querySelector('#name').value = student.name;
+  document.querySelector('#tel').value = student.tel;
+  if (student.working) {
+	  document.querySelector('#working').checked = 'checked';
+  } else {
+	  document.querySelector('#not-working').checked = 'checked';
+  }
+  document.querySelector('#grade').value = student.grade;
+  document.querySelector('#school-name').value = student.school-name;
+  document.querySelector('#photo-img').src = "../upload/" + student.photoPath;
+  
+});
+
+/* ajax 반복하기 싫으니까..
+function get(url, success) {
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+	  if (xhr.readyState < 4)
+	    return;
+	  success(xhr.responseText);
+	}
+	xhr.open('get', url, true);
+	xhr.send();
+}
+*/
+</script>
+
+</body>
+</html>

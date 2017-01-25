@@ -15,7 +15,10 @@
           @Component, @Controller, @Repository ,@Service애노테이션으 붙은 
           클래스를 찾아 인스턴스를 생성한다.
   -->
-  <context:component-scan base-package="bitcamp.java89.ems2.control"/>
+  <context:component-scan base-package="bitcamp.java89.ems2.control">
+    <!-- JSON 데이터를 출력하는 페이지 컨트롤러를 제외시킨다. -->
+    <context:exclude-filter type="regex" expression="bitcamp.java89.ems2.control.json.*"/>
+  </context:component-scan>
   
   <!-- 뷰 컴포넌트 관리자(View Resolver; 뷰 해결사) 등록 -->
   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

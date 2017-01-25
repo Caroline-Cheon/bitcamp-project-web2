@@ -1,5 +1,15 @@
 # bitcamp-project-web2
 
+## 3.0 - AJAX를 이용하여 서버와 클라이언트를 분리하기
+- /WEB-INF/web.xml에 *.json 요청을 처리할 프론트 컨트롤러 서블릿 추가
+- /WEB-INF/conf/json-servlet.xml 스프링 설정 파일 추가
+- JSON 문자열 출력 ViewResolver 라이브러리 가져오기
+  - build.gradle 변경
+- JSON 문자열을 출력하는 페이지 컨트롤러 생성
+  - StudentJsonControl, ManagerJsonControl, TeacherJsonControl, MemberJsonControl
+- HTML 생성
+  - /webapp/student/main.html 생성
+
 ## 2.9 - 클라이언트에서 JSP를 직접 접근하지 못하게 막아야 한다. 
 - JSP 파일을 WEB-INF 밑으로 옮긴다.
   - 왜? WEB-INF 폴더는 클라이언트에서 접근할 수 없다.
