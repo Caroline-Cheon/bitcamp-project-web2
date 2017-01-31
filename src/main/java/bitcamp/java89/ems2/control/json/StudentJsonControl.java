@@ -2,20 +2,19 @@ package bitcamp.java89.ems2.control.json;
 
 import java.io.File;
 import java.util.List;
-
 import javax.servlet.ServletContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import bitcamp.java89.ems2.domain.Student;
 import bitcamp.java89.ems2.service.StudentService;
 import bitcamp.java89.ems2.util.MultipartUtil;
 
-@Controller
+//@Controller
+@RestController
 public class StudentJsonControl {  // 페이지 컨트롤러!!
   // data를 직접 사용하지 않고 service를 경유한다.
   @Autowired ServletContext sc;

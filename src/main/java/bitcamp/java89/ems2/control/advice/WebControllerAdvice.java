@@ -15,6 +15,6 @@ public class WebControllerAdvice {
   public void initBinder(WebDataBinder binder) {   // 일관성을 주기위해서 메서드이름을 바인더라고 지정한 것뿐
     System.out.println("MyBindingInitializer.initBinder()...");
     dateFormat.setLenient(false);
-    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false)); // 문자열을 date 객체로
   }
 }

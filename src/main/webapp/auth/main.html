@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset='UTF-8'>
-<title>학생관리-목록</title>
+<title>로그인</title>
 <style type="text/css">
 
 body {
@@ -38,33 +38,55 @@ body {
 <div id='sidebar' style='background-color:Skyblue; width:180px; height:400px;'></div>
 
 <div id="content">
-<h1>학생 정보</h1>
-<a href='form.do'>추가</a><br>
-<table id='list-table' border='1'>
-<thead>
-  <tr>
-    <th>회원번호</th>
-    <th>이름</th>
-    <th>전화</th>
-    <th>재직</th>
-    <th>최종학력</th>
-    <th>학교명</th>
-  </tr>
-<thead>
-<tbody></tbody>
+<h1>로그인</h1>
+<form>
+<table border='1'>
+<tr>
+  <th>회원 유형</th>
+  <td>
+    <input type='radio' name='user-type' value='student' checked>학생
+    <input type='radio' name='user-type' value='teacher'>강사
+    <input type='radio' name='user-type' value='manager'>운영자
+  </td>
+</tr>
+<tr><th>이메일</th><td><input id='email' type='text' placeholder='예)hong@test.com'></td></tr>
+<tr><th>암호</th><td><input id='password' type='password'></td></tr>
+<tr><th></th><td><input id='save-email' type='checkbox'> 이메일 저장 </td></tr>
 </table>
+<button id='login-btn' type='button'>로그인</button>
+</form>
+
 </div>
 
 <div id='footer' style='background-color:gray; height:20px; margin-top:20px;'></div>
 
 <script src="../js/bit.js"></script>
 <script src="../js/common.js"></script>
-
 <script>
+document.querySelector('#login-btn').onclick = function() {
+	var param = {
+		email: document.querySelector('#email').value,
+		password: document.querySelector('#password').value,
+		saveEmail: document.querySelector('#save-email').checked 
+	};
+	
+	var userTypeList = document.querySelectorAll('input[name=user-type]'); // 배열이 아니라 컬렉션 타입이 넘어온다.
+	for (var i = 0; i < userTypeList.length; i++) {
+		if (userTypeList[i].checked) {
+			param.userType = userTypeList[i].value; 
+			break;
+		}
+	}
+
+	post('login.json', param, function(jsonText) {
+		var ajaxResult = JSON.parse(jsonText);
+		console.log(ajaxResult);
+	});
+}
 
 //학생 목록 가져와서 tr 태그를 만들어 붙인다.
+/*
 get('list.json', function(jsonText) {
-  //result JSON 문자열을 자바스크립트 객체로 만든다.
   var ajaxResult = JSON.parse(jsonText);
   var status = ajaxResult.status;
   
@@ -84,7 +106,7 @@ get('list.json', function(jsonText) {
       student.working + "</td><td>" +
       student.grade + "</td><td>" +
       student.schoolName + "</td></tr>";
-    tbody.appendChild(tr);  // 처음에는 tbody가 빈 상테 -> 반복문을 돌면서 채워진다.
+    tbody.appendChild(tr);
   }
 	// 학생 목록에서 이름 링크에 click 이벤트를 처리한다.name-link 라벨이 붙은 모든 링크를 찾는다.
 	var al = document.querySelectorAll('.name-link');
@@ -96,12 +118,6 @@ get('list.json', function(jsonText) {
 		}
 	}
 });
-
-/* 잘못된 예!!!!!!!
-// 비동기 프로그램에서 가장 중요시해야 하는 부분!!! 위의 get 메서드 호출후 바로 실행 되기 때문에 
-// 호출이 완료 되지 않은 상태에서 실행되게 된다.
-var al = document.querySelectorAll('.name-link');
-console.log(al);
 */
 
 function goView(no) {
