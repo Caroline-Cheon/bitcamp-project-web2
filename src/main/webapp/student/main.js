@@ -27,8 +27,7 @@ $.getJSON('list.json', function(ajaxResult) {
 	// 학생 목록에서 이름 링크에 click 이벤트를 처리한다.
 	$('.name-link').click(function(event) {
 		event.preventDefault(); // a 동작이 안되게 해야 한다.
-		location.href = 'view.html?memberNo=' + this.getAttribute('data-no'); 
-		// onclick 객체는 a에 속한다. 같은객체에 속하면 this를 적는다.
+		location.href = 'view.html?memberNo=' + $(this).attr('data-no'); 
 	});
 });
 
