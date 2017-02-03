@@ -1,5 +1,7 @@
 # bitcamp-project-web2
 
+## 3.4.1 - jQuery 적용2 - 로컬 웹서버 다운로드 방식
+
 ## 3.4 - jQuery 적용
 1) CDN(Content Delivery Network) 방식
   - CDN? 콘텐츠(파일)을 전세계 클라우드 센터에 분산 배치시키는 방법
