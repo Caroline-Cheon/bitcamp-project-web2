@@ -3,18 +3,19 @@
 <head>
 <meta charset='UTF-8'>
 <title>학생관리-목록</title>
+<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
 <link rel="stylesheet" href="../css/common.css">
 </head>
 <body>
+<div class="container">
+<div id='header'></div>
 
-<div id='header' style='background-color:gray; height:40px;position:relative;'></div>
-
-<div id='sidebar' style='background-color:Skyblue; width:180px; height:400px;'></div>
+<div id='sidebar'></div>
 
 <div id="content">
 <h1>학생 정보</h1>
-<a id='new-btn' href='#'>추가</a><br>
-<table id='list-table' border='1'>
+<a id='new-btn' href='#' class="btn btn-primary btn-sm">추가</a><br>
+<table id='list-table' class="table table-hover">
 <thead>
   <tr>
     <th>회원번호</th>
@@ -29,9 +30,11 @@
 </table>
 </div>
 
-<div id='footer' style='background-color:gray; height:20px; margin-top:20px;'></div>
+<div id='footer'></div>
+</div>
 
 <script src="../node_modules/jquery/dist/jquery.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
 <script src="../js/bit.js"></script>
 <script src="../js/common.js"></script>
 <script src="main.js"></script>

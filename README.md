@@ -1,5 +1,10 @@
 # bitcamp-project-web2
 
+## 3.6 - bootstrap CSS 라이브러리 적용
+1) npm으로 bootstrap 라이브러리 추가한다.
+   > npm install bootstrap --save
+2) HTML에 부트스트랩 
+
 ## 3.5 - npm을 이용하여 프론트 엔드 라이브러리 관리하기
 1) nodejs 설치한다.
 2) 명령창에서 /webapp 폴더로 이동한다.

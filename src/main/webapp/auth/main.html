@@ -3,38 +3,66 @@
 <head>
 <meta charset='UTF-8'>
 <title>로그인</title>
+<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
 <link rel="stylesheet" href="../css/common.css">
 </head>
 <body>
+<div class="container">
+<div id='header'></div>
 
-<div id='header' style='background-color:gray; height:40px;position:relative;'></div>
-
-<div id='sidebar' style='background-color:Skyblue; width:180px; height:400px;'></div>
+<div id='sidebar'></div>
 
 <div id="content">
 <h1>로그인</h1>
-<form>
-<table border='1'>
-<tr>
-  <th>회원 유형</th>
-  <td>
-    <input type='radio' name='user-type' value='student' checked>학생
-    <input type='radio' name='user-type' value='teacher'>강사
-    <input type='radio' name='user-type' value='manager'>운영자
-  </td>
-</tr>
-<tr><th>이메일</th><td><input id='email' type='text' placeholder='예)hong@test.com'></td></tr>
-<tr><th>암호</th><td><input id='password' type='password'></td></tr>
-<tr><th></th><td><input id='save-email' type='checkbox'> 이메일 저장 </td></tr>
-</table>
-<button id='submit-btn' type='button'>로그인</button>
+<form class="form-horizontal">
+  <div class="form-group">
+	    <label class="col-sm-2 control-label">회원 유형</label>
+	    <div class="col-sm-10">
+		    <label class="radio-inline">
+		      <input id='user-type1' type="radio" name="user-type" value="student" checked> 학생
+		    </label>
+		    <label class="radio-inline">
+		      <input id='user-type2' type="radio" name="user-type" value="teacher"> 강사
+		    </label>
+		    <label class="radio-inline">
+		      <input id='user-type3' type="radio" name="user-type" value="manager"> 운영자
+		    </label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email" class="col-sm-2 control-label">이메일</label>
+    <div class="col-sm-10">
+      <input id='email' type='text' class="form-control" placeholder='예)hong@test.com'>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password" class="col-sm-2 control-label">암호</label>
+    <div class="col-sm-10">
+      <input id='password' type='password' class="form-control">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input id='save-email' type='checkbox'>이메일 저장
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button id="submit-btn" type="button" class="btn btn-default">로그인</button>
+    </div>
+  </div>
 </form>
-
 </div>
 
-<div id='footer' style='background-color:gray; height:20px; margin-top:20px;'></div>
+<div id='footer'></div>
+</div>
 
 <script src="../node_modules/jquery/dist/jquery.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
 <script src="../js/bit.js"></script>
 <script src="../js/common.js"></script>
 <script src="main.js"></script>

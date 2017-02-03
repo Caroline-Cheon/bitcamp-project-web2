@@ -1,13 +1,27 @@
-
+@CHARSET "UTF-8";
 body {
   font-family: '맑은 고딕', sans-serif;
 }
 
+body > container {
+  width: 960px;
+}
+
+#header {
+	background-color:gray;
+	height:40px;
+	position:relative;
+}
+
 #sidebar {
+	position: absolute;
   color: white;
   padding: 10px 5px;
-  float: left;
-  margin: 5px 5px 5px 0px;
+  margin: 0px;
+  background: DarkTurquoise; 
+  width:180px; 
+  min-height:400px;
+  /*border: 1px solid green;*/
 }
 
 #sidebar a {
@@ -15,10 +29,17 @@ body {
   text-decoration: none;
 }
 
+#sidebar a:hover {
+  color: DarkTurquoise;
+}
+
 #content {
-  margin-left: 200px;
+  margin-left: 190px;
+  min-height: 400px;
+  /*border: 1px solid green;*/
 }
 
 #footer {
-  clear: left;
+  background-color:gray;
+  height:20px; 
 }
