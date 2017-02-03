@@ -1,5 +1,23 @@
 # bitcamp-project-web2
 
+## 3.5 - npm을 이용하여 프론트 엔드 라이브러리 관리하기
+1) nodejs 설치한다.
+2) 명령창에서 /webapp 폴더로 이동한다.
+3) npm 설정 파일(package.json)을 만든다.
+   > npm init
+4) 자바스크립트 라이브러리를 추가한다
+   > npm install 라이브러리명@버전 --save
+   - 버전을 지정하지 않으면 최신 버전을 자동으로 다운로드 한다.
+   - "--save"를 지정하면 pakage.json 파일에 의존 라이브러리로 등록한다.
+   - npm은 실행 폴더 아레에 node_modules라는 폴더를 만들고,
+     그 폴더에 다운로드 받는다.
+5) 자동으로 모든 의존 라이브러리 다운로드 받기
+   > npm install
+   - 라이브러리 이름을 지정하지 않으면, 실행 폴더에서 package.json을 찾는다.
+   - package.json에 등록된 의존 라이브버리를 자동으로 다운로드 받는다.
+    
+
+
 ## 3.4.1 - jQuery 적용2 - 로컬 웹서버 다운로드 방식
 
 ## 3.4 - jQuery 적용
