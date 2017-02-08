@@ -33,6 +33,20 @@
 <div id='footer'></div>
 </div>
 
+<script id="trTemplate" type="text/x-handlebars-template">
+{{#each list}}
+<tr>
+  <td>{{memberNo}}</td>
+  <td><a class="name-link" href="#" data-no="{{memberNo}}">{{name}}</a></td>
+  <td>{{tel}}</td>
+  <td>{{working}}</td>
+  <td>{{grade}}</td>
+  <td>{{schoolName}}</td>
+</tr>
+{{/each}}
+</script>
+
+<script src="../node_modules/handlebars/dist/handlebars.js"></script>
 <script src="../node_modules/jquery/dist/jquery.js"></script>
 <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
 <script src="../js/bit.js"></script>
